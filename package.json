@@ -1,0 +1,12 @@
+{
+  "name": "notice-board",
+  "version": "1.0.0",
+  "description": "Department Notice Board",
+  "main": "server.js",
+  "scripts": {
+      "start": "node server.js"
+  },
+  "dependencies": {
+      "express": "^5.0.0"
+  }
+}

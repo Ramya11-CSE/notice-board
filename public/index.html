@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Develop a Simple Web Application, Containerize It Using Docker, and Deploy It on Kubernetes. Digital Notice Board & Container Runtime Dashboard.">
+    <meta name="keywords" content="Docker, Kubernetes, Web Application, Notice Board, Cloud Computing, DevOps, Selvaraj">
+    <meta name="author" content="Selvaraj">
+    <title>Digital Notice Board | Develop a Simple Web Application, Containerize It Using Docker, and Deploy It on Kubernetes</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-theme="light">
+    <!-- Background Animated Purple Lighting Orbs -->
+    <div class="bg-blur-orb orb-1" aria-hidden="true"></div>
+    <div class="bg-blur-orb orb-2" aria-hidden="true"></div>
+    <div class="bg-blur-orb orb-3" aria-hidden="true"></div>
+
+    <!-- Application Wrapper -->
+    <div class="app-layout">
+        
+        <!-- Header / Navigation Bar -->
+        <header class="site-header" id="site-header">
+            <div class="header-container">
+                <div class="header-brand">
+                    <div class="brand-icon-wrapper" aria-hidden="true">
+                        <svg class="brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                            <circle cx="7" cy="8" r="1.5" fill="currentColor"></circle>
+                            <line x1="11" y1="8" x2="18" y2="8"></line>
+                            <line x1="7" y1="12" x2="18" y2="12"></line>
+                        </svg>
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-tag">Cloud & DevOps Project</span>
+                        <span class="brand-title">Digital Notice Board</span>
+                    </div>
+                </div>
+
+                <div class="header-controls">
+                    <!-- Live Cluster Health Badge -->
+                    <div class="status-indicator-pill" id="cluster-health-pill" title="Live Health Probe Status">
+                        <span class="pulse-dot" id="health-pulse"></span>
+                        <span class="status-label" id="health-label">Cluster Online</span>
+                        <span class="pod-tag" id="header-pod-tag">Host: Selvaraj</span>
+                    </div>
+
+                    <!-- Theme Toggle Button -->
+                    <button class="icon-button" id="theme-toggle-btn" aria-label="Toggle Theme" title="Switch Theme">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Add Notice Primary CTA -->
+                    <button class="btn btn-primary" id="open-modal-btn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span>Post Notice</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Container -->
+        <main class="main-content" id="main-content">
+            
+            <!-- Hero Section -->
+            <section class="hero-section" id="hero-section">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">Cloud & DevOps Platform</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Develop a Simple Web Application, Containerize It Using Docker, and Deploy It on Kubernetes
+                </h1>
+
+                <p class="hero-subtitle">
+                    Digital Notice Board • High-Availability Microservice Containerized with Docker and Orchestrated via Kubernetes
+                </p>
+
+                <!-- Key Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card" id="metric-notices-card">
+                        <div class="metric-icon-box purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-label">Active Notices</span>
+                            <span class="metric-value" id="metric-notice-count">4</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" id="metric-pod-card">
+                        <div class="metric-icon-box blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-label">Pod Hostname</span>
+                            <span class="metric-value metric-host" id="metric-pod-name">Selvaraj</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" id="metric-health-card">
+                        <div class="metric-icon-box green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-label">Health Probe</span>
+                            <span class="metric-value status-text-healthy" id="metric-health-status">HTTP 200 OK</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" id="metric-runtime-card">
+                        <div class="metric-icon-box amber">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-label">Server Uptime</span>
+                            <span class="metric-value" id="metric-uptime">0s</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation Tabs -->
+            <nav class="tabs-nav" id="tabs-navigation" aria-label="Section Tabs">
+                <button class="tab-button active" id="tab-btn-notices" data-tab="tab-notices">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Notice Board</span>
+                    <span class="tab-badge" id="tab-notices-badge">4</span>
+                </button>
+
+                <button class="tab-button" id="tab-btn-cluster" data-tab="tab-cluster">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <span>Kubernetes & Docker Monitor</span>
+                </button>
+
+                <button class="tab-button" id="tab-btn-devops" data-tab="tab-devops">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="4 17 10 11 4 5"></polyline>
+                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                    </svg>
+                    <span>Runbook & CLI Commands</span>
+                </button>
+
+                <button class="tab-button" id="tab-btn-api" data-tab="tab-api">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16.5 9.4 7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55L16.5 14.6a1.78 1.78 0 0 0 0-3.2z"></path>
+                    </svg>
+                    <span>REST API Inspector</span>
+                </button>
+            </nav>
+
+            <!-- TAB 1: NOTICE BOARD -->
+            <section class="tab-pane active" id="tab-notices">
+                <!-- Search & Filter Controls -->
+                <div class="filters-toolbar">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="search-input" placeholder="Search notices by title, keyword, or author..." aria-label="Search notices">
+                        <button class="clear-search-btn" id="clear-search" aria-label="Clear search" title="Clear">✕</button>
+                    </div>
+
+                    <div class="filter-categories" id="filter-categories-container">
+                        <button class="filter-chip active" data-category="all">All</button>
+                        <button class="filter-chip" data-category="Project">Projects</button>
+                        <button class="filter-chip" data-category="Exam">Exams</button>
+                        <button class="filter-chip" data-category="DevOps">DevOps</button>
+                        <button class="filter-chip" data-category="Review">Reviews</button>
+                    </div>
+
+                    <button class="btn btn-secondary" id="refresh-notices-btn" title="Refresh Notice Feed">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                        <span>Refresh</span>
+                    </button>
+                </div>
+
+                <!-- Notices Cards Grid -->
+                <div class="notices-grid" id="notices-grid-container">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading notices from container server...</p>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state hidden" id="empty-state">
+                    <div class="empty-icon-box">📋</div>
+                    <h3>No notices match your filter</h3>
+                    <p>Try searching for a different keyword or select "All" categories.</p>
+                    <button class="btn btn-primary" id="reset-filters-btn">Reset Filters</button>
+                </div>
+            </section>
+
+            <!-- TAB 2: KUBERNETES & DOCKER MONITOR -->
+            <section class="tab-pane" id="tab-cluster">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">Deployment Topology & Container Runtime</h2>
+                            <p class="panel-desc">Visual representation of the containerized workload orchestrated via Kubernetes</p>
+                        </div>
+                        <button class="btn btn-secondary" id="refresh-system-btn">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 4 23 10 17 10"></polyline>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                            </svg>
+                            <span>Live Poll</span>
+                        </button>
+                    </div>
+
+                    <!-- Visual Flow Diagram -->
+                    <div class="topology-diagram">
+                        <div class="topo-node topo-client">
+                            <div class="node-icon">🌐</div>
+                            <div class="node-name">Client Traffic</div>
+                            <div class="node-sub">Port 80 / Browser</div>
+                        </div>
+                        <div class="topo-arrow">➔</div>
+                        <div class="topo-node topo-service">
+                            <div class="node-icon">☸️</div>
+                            <div class="node-name">K8s Service</div>
+                            <div class="node-sub">NodePort :30080</div>
+                        </div>
+                        <div class="topo-arrow">➔</div>
+                        <div class="topo-node topo-deployment">
+                            <div class="node-icon">📦</div>
+                            <div class="node-name">Deployment Pods</div>
+                            <div class="node-sub">3 Replicas (Active)</div>
+                        </div>
+                        <div class="topo-arrow">➔</div>
+                        <div class="topo-node topo-container">
+                            <div class="node-icon">🐳</div>
+                            <div class="node-name">Docker Engine</div>
+                            <div class="node-sub">Node.js Express :3000</div>
+                        </div>
+                    </div>
+
+                    <!-- Diagnostics Data Grid -->
+                    <div class="diagnostics-grid">
+                        <div class="diag-item">
+                            <span class="diag-label">Pod Hostname / Container ID</span>
+                            <span class="diag-value font-mono" id="diag-hostname">Selvaraj</span>
+                        </div>
+                        <div class="diag-item">
+                            <span class="diag-label">OS Platform & Architecture</span>
+                            <span class="diag-value font-mono" id="diag-platform">Loading...</span>
+                        </div>
+                        <div class="diag-item">
+                            <span class="diag-label">Node.js Runtime</span>
+                            <span class="diag-value font-mono" id="diag-node-ver">Loading...</span>
+                        </div>
+                        <div class="diag-item">
+                            <span class="diag-label">Service Port</span>
+                            <span class="diag-value font-mono" id="diag-port">3000</span>
+                        </div>
+                        <div class="diag-item">
+                            <span class="diag-label">Process Memory (RSS)</span>
+                            <span class="diag-value font-mono" id="diag-memory">Loading...</span>
+                        </div>
+                        <div class="diag-item">
+                            <span class="diag-label">Environment Mode</span>
+                            <span class="diag-value font-mono" id="diag-env">production</span>
+                        </div>
+                        <div class="diag-item">
+                            <span class="diag-label">Container Health Status</span>
+                            <span class="diag-value tag-success" id="diag-health-badge">● 200 OK Healthy</span>
+                        </div>
+                        <div class="diag-item">
+                            <span class="diag-label">Kubernetes Health Check Endpoint</span>
+                            <span class="diag-value font-mono text-link">/api/healthz</span>
+                        </div>
+                    </div>
+
+                    <!-- Kubernetes Replicas Simulation Status -->
+                    <div class="replicas-section">
+                        <h3 class="subheading">Kubernetes Replicas Status (notice-board-deployment)</h3>
+                        <div class="replica-pods-list">
+                            <div class="replica-pod active-current">
+                                <div class="pod-header">
+                                    <span class="pod-status-dot green"></span>
+                                    <span class="pod-name" id="current-pod-label">Selvaraj (Active Pod)</span>
+                                </div>
+                                <div class="pod-meta">
+                                    <span>Status: <strong>Running</strong></span>
+                                    <span>Restarts: <strong>0</strong></span>
+                                    <span>Ready: <strong>1/1</strong></span>
+                                </div>
+                            </div>
+
+                            <div class="replica-pod">
+                                <div class="pod-header">
+                                    <span class="pod-status-dot green"></span>
+                                    <span class="pod-name">notice-board-pod-2</span>
+                                </div>
+                                <div class="pod-meta">
+                                    <span>Status: <strong>Running</strong></span>
+                                    <span>Restarts: <strong>0</strong></span>
+                                    <span>Ready: <strong>1/1</strong></span>
+                                </div>
+                            </div>
+
+                            <div class="replica-pod">
+                                <div class="pod-header">
+                                    <span class="pod-status-dot green"></span>
+                                    <span class="pod-name">notice-board-pod-3</span>
+                                </div>
+                                <div class="pod-meta">
+                                    <span>Status: <strong>Running</strong></span>
+                                    <span>Restarts: <strong>0</strong></span>
+                                    <span>Ready: <strong>1/1</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: DEVOPS & RUNBOOK CLI COMMANDS -->
+            <section class="tab-pane" id="tab-devops">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">Cloud Deployment Runbook</h2>
+                            <p class="panel-desc">Step-by-step commands to build the Docker image and deploy onto Kubernetes</p>
+                        </div>
+                    </div>
+
+                    <div class="runbook-steps">
+                        <!-- Step 1 -->
+                        <div class="runbook-step">
+                            <div class="step-badge">Phase 1</div>
+                            <div class="step-content">
+                                <h3>1. Local Development & Verification</h3>
+                                <p>Run and test the Express notice-board server locally before containerization:</p>
+                                <div class="terminal-box">
+                                    <div class="terminal-bar">
+                                        <div class="terminal-dots">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                        <span class="terminal-title">Bash / PowerShell</span>
+                                        <button class="copy-cmd-btn" data-clipboard="npm install &amp;&amp; npm start">Copy</button>
+                                    </div>
+                                    <pre><code>npm install &amp;&amp; npm start</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="runbook-step">
+                            <div class="step-badge">Phase 2</div>
+                            <div class="step-content">
+                                <h3>2. Containerize with Docker</h3>
+                                <p>Build the Docker image and run the isolated container on port 3000:</p>
+                                
+                                <div class="terminal-box">
+                                    <div class="terminal-bar">
+                                        <div class="terminal-dots">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                        <span class="terminal-title">Docker Build</span>
+                                        <button class="copy-cmd-btn" data-clipboard="docker build -t notice-board-app:latest .">Copy</button>
+                                    </div>
+                                    <pre><code>docker build -t notice-board-app:latest .</code></pre>
+                                </div>
+
+                                <div class="terminal-box">
+                                    <div class="terminal-bar">
+                                        <div class="terminal-dots">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                        <span class="terminal-title">Docker Run (Port 3000)</span>
+                                        <button class="copy-cmd-btn" data-clipboard="docker run -d -p 3000:3000 --name notice-board-container notice-board-app:latest">Copy</button>
+                                    </div>
+                                    <pre><code># Make sure local npm start is stopped first to avoid port conflict
+docker run -d -p 3000:3000 --name notice-board-container notice-board-app:latest</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="runbook-step">
+                            <div class="step-badge">Phase 3</div>
+                            <div class="step-content">
+                                <h3>3. Deploy on Kubernetes Cluster</h3>
+                                <p>Apply deployment manifests with 3 replicas, liveness/readiness probes, and NodePort service:</p>
+
+                                <div class="terminal-box">
+                                    <div class="terminal-bar">
+                                        <div class="terminal-dots">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                        <span class="terminal-title">Kubectl Apply</span>
+                                        <button class="copy-cmd-btn" data-clipboard="kubectl apply -f k8s/k8s-all-in-one.yaml">Copy</button>
+                                    </div>
+                                    <pre><code>kubectl apply -f k8s/k8s-all-in-one.yaml</code></pre>
+                                </div>
+
+                                <div class="terminal-box">
+                                    <div class="terminal-bar">
+                                        <div class="terminal-dots">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                        <span class="terminal-title">Check Pods &amp; Service</span>
+                                        <button class="copy-cmd-btn" data-clipboard="kubectl get pods -l app=notice-board-app -o wide &amp;&amp; kubectl get svc notice-board-service">Copy</button>
+                                    </div>
+                                    <pre><code>kubectl get pods -l app=notice-board-app -o wide
+kubectl get svc notice-board-service</code></pre>
+                                </div>
+
+                                <div class="terminal-box">
+                                    <div class="terminal-bar">
+                                        <div class="terminal-dots">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                        <span class="terminal-title">Forward Port (Minikube / Docker Desktop)</span>
+                                        <button class="copy-cmd-btn" data-clipboard="kubectl port-forward service/notice-board-service 3000:3000">Copy</button>
+                                    </div>
+                                    <pre><code>kubectl port-forward service/notice-board-service 3000:3000</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: LIVE REST API INSPECTOR -->
+            <section class="tab-pane" id="tab-api">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="panel-title">Interactive API Tester</h2>
+                            <p class="panel-desc">Test real-time containerized endpoints used by Kubernetes liveness and frontend controllers</p>
+                        </div>
+                    </div>
+
+                    <div class="api-tester-controls">
+                        <button class="api-test-btn active" data-endpoint="/api/healthz">
+                            <span class="method get">GET</span>
+                            <span>/api/healthz (Kubernetes Probe)</span>
+                        </button>
+
+                        <button class="api-test-btn" data-endpoint="/api/info">
+                            <span class="method get">GET</span>
+                            <span>/api/info (Cluster &amp; System Specs)</span>
+                        </button>
+
+                        <button class="api-test-btn" data-endpoint="/api/notices">
+                            <span class="method get">GET</span>
+                            <span>/api/notices (Notice Board Items)</span>
+                        </button>
+
+                        <button class="api-test-btn" data-endpoint="/api/status">
+                            <span class="method get">GET</span>
+                            <span>/api/status (Server Ping)</span>
+                        </button>
+                    </div>
+
+                    <div class="api-output-wrapper">
+                        <div class="api-output-header">
+                            <div class="output-status">
+                                <span class="badge-status-code" id="api-status-code">200 OK</span>
+                                <span class="badge-latency" id="api-latency">12ms</span>
+                            </div>
+                            <button class="btn-sm" id="btn-copy-json">Copy JSON</button>
+                        </div>
+                        <pre class="api-json-display"><code id="api-response-code">{
+  "status": "healthy",
+  "message": "Click an endpoint above to execute a real-time request."
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-container">
+                <div class="footer-left">
+                    <p class="footer-title">Digital Notice Board</p>
+                    <p class="footer-subtitle">Develop a Simple Web Application, Containerize It Using Docker, and Deploy It on Kubernetes</p>
+                </div>
+                <div class="footer-right">
+                    <span class="footer-meta-pill">Built by Selvaraj • Docker &amp; Kubernetes</span>
+                    <span class="footer-copyright">Cloud Computing &amp; DevOps Project</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Add Notice Modal Dialog -->
+    <div class="modal-backdrop hidden" id="notice-modal-backdrop" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+            <div class="modal-header">
+                <div>
+                    <h2 class="modal-title" id="modal-heading">Publish New Notice</h2>
+                    <p class="modal-sub">Add a new announcement to the digital notice board</p>
+                </div>
+                <button class="modal-close-btn" id="modal-close-btn" aria-label="Close dialog">✕</button>
+            </div>
+
+            <form id="notice-form" class="modal-form">
+                <div class="form-group">
+                    <label for="notice-title">Notice Title <span class="req">*</span></label>
+                    <input type="text" id="notice-title" placeholder="e.g. Docker Containerization Lab Review" required maxlength="100">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="notice-category">Category</label>
+                        <select id="notice-category">
+                            <option value="Project">Project</option>
+                            <option value="Exam">Exam</option>
+                            <option value="DevOps">DevOps</option>
+                            <option value="Review">Review</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notice-priority">Urgency Priority</label>
+                        <select id="notice-priority">
+                            <option value="normal">Normal</option>
+                            <option value="important">Important</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notice-author">Author / Faculty Name</label>
+                    <input type="text" id="notice-author" placeholder="Selvaraj" value="Selvaraj" maxlength="50">
+                </div>
+
+                <div class="form-group">
+                    <label for="notice-content">Notice Content / Description <span class="req">*</span></label>
+                    <textarea id="notice-content" rows="4" placeholder="Enter notice details, instructions, or venue..." required maxlength="500"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="modal-submit-btn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Publish Notice</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
